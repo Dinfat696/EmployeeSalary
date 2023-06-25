@@ -18,14 +18,14 @@ public class DepartmentService {
 
     public Employee getEmployeeWithMaxSalary(int department) {
         return employeeService.getAll().stream()
-                .filter(e -> e.getDepartments() == department)
+                .filter(e -> e.getDepartment() == department)
                 .max(Comparator.comparingDouble(u -> u.getSalary()))
                 .orElse(null);
     }
 
     public Employee getEmployeeWithMinSalary(int department) {
         return employeeService.getAll().stream()
-                .filter(e -> e.getDepartments() == department)
+                .filter(e -> e.getDepartment() == department)
                 .min(Comparator.comparingDouble(u -> u.getSalary()))
                 .orElse(null);
     }
@@ -34,13 +34,13 @@ public class DepartmentService {
 
     public List<Employee> getEmployeeByDepartment(int department){
         return employeeService.getAll().stream()
-                .filter(e -> e.getDepartments() == department)
+                .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
 
     }
     public Map<Integer,List<Employee>> getEmployeeGrouped(){
         return employeeService.getAll().stream()
-                .collect(Collectors.groupingBy(Employee::getDepartments));
+                .collect(Collectors.groupingBy(Employee::getDepartment));
 
     }
 }

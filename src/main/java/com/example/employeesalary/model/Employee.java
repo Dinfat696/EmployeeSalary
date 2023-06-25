@@ -1,53 +1,38 @@
 package com.example.employeesalary.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class Employee {
     private String firstName;
     private String lastName;
-    private Integer departments;
+    private Integer department;
     private double salary;
 
-    public Employee(String firstName, String lastName, Integer departments, double salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.departments = departments;
+    public Employee(String firstName, String lastName, Integer department, double salary) {
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
+        this.department = department;
         this.salary = salary;
-    }
-
-    public Employee(String firstName, String lastName, double salary, Integer departments) {
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Integer getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(Integer departments) {
-        this.departments = departments;
+    public Integer getDepartment() {
+        return department;
     }
 
     public double getSalary() {
         return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
     }
 
     @Override
@@ -55,7 +40,12 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Double.compare(employee.salary, salary) == 0 && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(departments, employee.departments);
+        return Double.compare(employee.salary, salary) == 0 && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(department, employee.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, department, salary);
     }
 
     @Override
@@ -63,15 +53,9 @@ public class Employee {
         return "Employee{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", departments=" + departments +
+                ", department=" + department +
                 ", salary=" + salary +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, departments, salary);
-
     }
 }
 

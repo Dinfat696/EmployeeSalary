@@ -3,10 +3,14 @@ package com.example.employeesalary.service;
 import com.example.employeesalary.exception.EmployeeAlReadyAddedException;
 import com.example.employeesalary.exception.EmployeeNotFoundException;
 import com.example.employeesalary.exception.EmployeeStorageIsFullException;
+import com.example.employeesalary.exception.InvalidDataException;
 import com.example.employeesalary.model.Employee;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeService {
@@ -19,6 +23,8 @@ public class EmployeeService {
     }
 
     public Employee add(Employee employee) {
+        if(!StringUtils.isAlpha(employee.getFirstName())|| !StringUtils.isAlpha(employee.getLastName()))
+            throw new InvalidDataException();
         if (employees.size() >= SIZE_LIMIT) {
             throw new EmployeeStorageIsFullException();
         }
@@ -28,6 +34,7 @@ public class EmployeeService {
         employees.put(createKey(employee), employee);
         return employee;
     }
+
 
     public Employee find(String firstName, String lastName) {
         Employee employee = employees.get(createKey(firstName, lastName));
@@ -44,8 +51,9 @@ public class EmployeeService {
     private static String createKey(Employee employee) {
         return createKey(employee.getFirstName(), employee.getLastName());
     }
-        private static String createKey(String firstName, String lastName){
-            return (firstName + lastName).toLowerCase();
-        }
+    private static String createKey(String firstName, String lastName){
+        return (firstName + lastName).toLowerCase();
+
     }
+}
 
