@@ -23,8 +23,8 @@ public class EmployeeService {
     }
 
     public Employee add(Employee employee) {
-       /*if(!StringUtils.isAlpha(employee.getFirstName())|| !StringUtils.isAlpha(employee.getLastName()))
-            throw new InvalidDataException();*/
+       if(!StringUtils.isAlpha(employee.getFirstName())|| !StringUtils.isAlpha(employee.getLastName()))
+            throw new InvalidDataException();
         if (employees.size() >= SIZE_LIMIT) {
             throw new EmployeeStorageIsFullException();
         }
